@@ -22,19 +22,19 @@
         </tr>
         <tr>
             <td>Зарплата:</td>
-            <td><input type="text" id="salary"></td>
+            <td><input type="text" id="salary" pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Проценты:</td>
-            <td><input type="text" id="interest"></td>
+            <td><input type="text" id="interest"  pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Дивиденды:</td>
-            <td><input type="text" id="dividends"></td>
+            <td><input type="text" id="dividends"  pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Недвижимость:</td>
-            <td><input type="text" id="realEstate"></td>
+            <td><input type="text" id="realEstate" pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Бизнес и предприятия:</td>
@@ -54,39 +54,39 @@
         </tr>
         <tr>
             <td>Налоги:</td>
-            <td><input type="text" id="taxes"></td>
+            <td><input type="text" id="taxes"  pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Выплаты по ипотеке и аренда плата:</td>
-            <td><input type="text" id="mortgageRent"></td>
+            <td><input type="text" id="mortgageRent"  pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Выплаты по кредиту на образование:</td>
-            <td><input type="text" id="educationLoan"></td>
+            <td><input type="text" id="educationLoan"  pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Выплаты по кредиту на автомобиль:</td>
-            <td><input type="text" id="carLoan"></td>
+            <td><input type="text" id="carLoan"  pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Выплаты по кредитной карточке:</td>
-            <td><input type="text" id="creditCardDebt"></td>
+            <td><input type="text" id="creditCardDebt"  pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Выплаты по мелким кредитам:</td>
-            <td><input type="text" id="smallLoans"></td>
+            <td><input type="text" id="smallLoans"  pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Прочие расходы:</td>
-            <td><input type="text" id="otherExpenses"></td>
+            <td><input type="text" id="otherExpenses"  pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Количество детей:</td>
-            <td><input type="text" id="numChildren"></td>
+            <td><input type="text" id="numChildren"  pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td>Расходы на одного ребенка:</td>
-            <td><input type="text" id="expensePerChild"></td>
+            <td><input type="text" id="expensePerChild"  pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
         <tr>
             <td><b>Расходы на детей:</b></td>
@@ -94,7 +94,7 @@
         </tr>
         <tr>
             <td><b>Оплата кредита банка (10%):</b></td>
-            <td><input type="text" id="bankLoanPayment"></td>
+            <td><input type="text" id="bankLoanPayment" readonly></td>
         </tr>
         <tr>
             <td><b>Общий Расход:</b></td>
@@ -202,7 +202,7 @@
         </tr>
         <tr>
             <td>Кредит банка:</td>
-            <td><input type="text" id="bankLoanDebt"></td>
+            <td><input type="text" id="bankLoanDebt" pattern="[0-9]*" inputmode="numeric"></td>
         </tr>
     </table>
     <p>---</p>
@@ -290,8 +290,8 @@
             if (passiveTotalIncome > totalExpense) {
                 const element = document.getElementById('goal_ok')
                 element.style.display = "block"; 
-                element.style.color = '#800080'
-                element.style.backgroundColor = '#008000'
+                element.style.color = '#700070'
+                element.style.backgroundColor = '#028202'
             } else {
                 document.getElementById('goal_ok').style.display = "none"; 
             }
