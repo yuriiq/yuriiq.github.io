@@ -89,58 +89,69 @@
             
             <div class="section">
                 <h2>Расходы</h2>
-                <div class="expense-category">
-                    <div id="status">
-                        <input type="radio" name="status" id="student" value="student" checked>
-                        <label for="student" class="btn">Студент</label>
-                        <input type="radio" name="status" id="worker" value="worker">
-                        <label for="worker" class="btn">Рабочий</label>
-                    </div>
-                    <label for="rent-total">
-                        Жильё: 
-                        <div class="inline" id="rent-price">200</div>$:
-                        <input type="radio" name="rent" id="rent-full" value="1" checked>
-                        <label for="rent-full" class="btn">целиком</label>
-                        <input type="radio" name="rent" id="rent-discount" value="0.5">
-                        <label for="rent-discount" class="btn">половина</label>
-                        <input type="radio" name="rent" id="rent-zero" value="0">
-                        <label for="rent-zero" class="btn">ничего</label>
-                    </label>
-                    <input type="number" id="rent" name="rent-total">
-                    <label for="food">
-                        Питание: 
-                        <input type="checkbox" name="food1">
-                        <input type="checkbox" name="food2">
-                        <div class="inline" id="food-price">120</div>
-                        $
-                    </label>
-                    <input type="number" id="food" name="food">
-                    <label for="internet">
-                        Связь, интернет: 
-                        <input type="checkbox" name="internet1">
-                        <input type="checkbox" name="internet2">
-                        <div class="inline" id="internet-price">10</div>
-                        $
-                    </label>
-                    <input type="number" id="internet" name="internet">
-                    <label for="transport">
-                        Проезд: 
-                        <input type="checkbox" name="transport1">
-                        <input type="checkbox" name="transport2">
-                        <div class="inline" id="transport-price">30</div>
-                        $
-                    </label>
-                    <input type="number" id="transport" name="transport">
-                    <div>
-                        Дети: 
-                        <input type="checkbox" id="children1" name="children1">
-                        <input type="checkbox" id="children2" name="children2">
-                        <input type="checkbox" id="children3" name="children3">
-                        <div class="inline" id="children-price">100</div>
-                        $
-                    </div> 
-                    <input type="number" id="children" name="children" readonly>
-                </div>
+                <table>
+                    <tr>
+                        <td colspan="4">
+                            <input type="radio" name="status" id="student" value="student" checked>
+                            <label for="student" class="btn">Студент</label>
+                            <input type="radio" name="status" id="worker" value="worker">
+                            <label for="worker" class="btn">Рабочий</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Жильё</td>
+                        <td>
+                            <div id="rent-type">
+                                    <input type="radio" name="rent" id="rent-full" value="1" checked>
+                                    <label for="rent-full" class="btn">целиком</label>
+                                    <input type="radio" name="rent" id="rent-discount" value="0.5">
+                                    <label for="rent-discount" class="btn">половина</label>
+                                    <input type="radio" name="rent" id="rent-zero" value="0">
+                                    <label for="rent-zero" class="btn">ничего</label>
+                            </div>
+                        </td>
+                        <td><div class="inline" id="rent-price">200</div>$</td>
+                        <td><input type="number" id="rent" name="rent-total"></td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Питание</td>
+                        <td>
+                            <input type="checkbox" name="food1">
+                            <input type="checkbox" name="food2">
+                        </td>
+                        <td><div class="inline" id="food-price">120</div>$</td>
+                        <td><input type="number" id="food" name="food"></td>
+                    </tr>
+                    <tr>
+                        <td>Связь, интернет</td>
+                        <td>
+                            <input type="checkbox" name="internet1">
+                            <input type="checkbox" name="internet2">
+                        </td>
+                        <td><div class="inline" id="internet-price">10</div>$</td>
+                        <td><input type="number" id="internet" name="internet"></td>
+                    </tr>
+                    <tr>
+                        <td>Проезд</td>
+                        <td>
+                            <input type="checkbox" name="transport1">
+                            <input type="checkbox" name="transport2">
+                        </td>
+                        <td><div class="inline" id="transport-price">30</div>$</td>
+                        <td><input type="number" id="transport" name="transport"></td>
+                    </tr>
+                    <tr>
+                        <td>Дети</td>
+                        <td>
+                            <input type="checkbox" id="children1" name="children1">
+                            <input type="checkbox" id="children2" name="children2">
+                            <input type="checkbox" id="children3" name="children3">
+                        </td>
+                        <td><div class="inline" id="children-price">100</div>$</td>
+                        <td><input type="number" id="children" name="children" readonly></td>
+                    </tr>
+                </table>
                 <div class="total">
                     <label for="total-expenses">Итого расходов на жизнь:</label>
                     <input type="number" id="total-expenses" name="total-expenses" readonly>
@@ -192,9 +203,9 @@
                     <input type="number" id="balance" name="balance" readonly>
                 </div>
             </div>
-            <p>---</p>
+            <p> </p>
             <button id="clearCache" type="reset">Очистить всё</button>
-            <p>---</p>
+            <p> </p>
         </form>
     </div>
 </body>
@@ -362,7 +373,7 @@
     }
     
     .container {
-        min-width: 600px;
+        min-width: 480px;
         margin: 20px auto;
         background: #fff;
         padding: 20px;
@@ -391,11 +402,17 @@
         margin: 5px 0;
     }
 
-    input[type="text"],
+    input[type="text"] {
+        width: 80%;
+        padding: 5px;
+        margin: 5px 0 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;        
+    }
+
     input[type="number"] {
-        width: calc(100% - 22px);
+        width: 80px;
         padding: 10px;
-        margin: 5px 0 10px;
         border: 1px solid #ddd;
         border-radius: 4px;
     }
@@ -406,22 +423,29 @@
     input[type="radio"] label {
         padding: 5px;
         cursor: pointer;
-        -webkit-appearance: button;
-        /* WebKit */
-        -moz-appearance: button;
-        /* Mozilla */
-        -o-appearance: button;
-        /* Opera */
-        -ms-appearance: button;
-        /* Internet Explorer */
         appearance: button;
-        /* CSS3 */
     }
 
     input[type="radio"]:checked + label {
         background-color: #007bff;
         color: #fff;
         border-color: #007bff;
+    }
+
+    input[type="checkbox"] {
+        appearance: none;
+        min-width: 20px;
+        min-height: 20px;
+        height: 100%;
+        width: height;
+        background-color: #ccc;
+        border: none;
+        cursor: pointer;
+        outline: none;
+    }
+
+    input[type="checkbox"]:checked {
+        background-color: #007bff;
     }
 
     label.btn {
@@ -438,7 +462,7 @@
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     
     table, th, td {
@@ -447,7 +471,7 @@
     
     th, td {
         padding: 10px;
-        text-align: left;
+        text-align: center;
     }
     
     .total {
@@ -470,6 +494,10 @@
     #status {
         display: block;
         margin-bottom: 20px;
+    }
+    #rent-type {
+        display: block;
+        min-width: 260px;
     }
     
 </style>
