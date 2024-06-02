@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashFlow 606</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Калькулятор CashFlow 606</h1>
+        <form id="game-form">
+            <div class="section">
+                <h2>Доходы</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Вид деятельности</th>
+                            <th>Название</th>
+                            <th>Базовый доход</th>
+                            <th>Прирост +$</th>
+                            <th>Прирост +%</th>
+                            <th>Итого</th>
+                        </tr>
+                    </thead>
+                    <tbody id="income-table">
+                        <tr>
+                            <td>Активный доход</td>
+                            <td><input type="text"   class="title"    name="job-title"></td>
+                            <td><input type="number" class="base"     name="starting-salary"></td>
+                            <td><input type="number" class="extra"    name="extra-income"></td>
+                            <td><input type="number" class="increase" name="training-increase"></td>
+                            <td><input type="number" class="final"    name="final-salary" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Второй активный доход</td>
+                            <td><input type="text"   class="title"    name="job2-title"></td>
+                            <td><input type="number" class="base"     name="job2"></td>
+                            <td><input type="number" class="extra"    name="job2-extra-income"></td>
+                            <td><input type="number" class="increase" name="job2-training-increase"></td>
+                            <td><input type="number" class="final"    name="final-job2" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Пассивный доход</td>
+                            <td><input type="text"   class="title"    name="passive-title"></td>
+                            <td><input type="number" class="base"     name="passive"></td>
+                            <td><input type="number" class="extra"    name="passive-extra-income"></td>
+                            <td><input type="number" class="increase" name="passive-training-increase"></td>
+                            <td><input type="number" class="final"    name="final-passive" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Пассивный доход</td>
+                            <td><input type="text"   class="title"    name="passive2-title"></td>
+                            <td><input type="number" class="base"     name="passive2"></td>
+                            <td><input type="number" class="extra"    name="passive2-extra-income"></td>
+                            <td><input type="number" class="increase" name="passive2-training-increase"></td>
+                            <td><input type="number" class="final"    name="final2-passive" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Пассивный доход</td>
+                            <td><input type="text"   class="title"    name="passive3-title"></td>
+                            <td><input type="number" class="base"     name="passive3"></td>
+                            <td><input type="number" class="extra"    name="passive3-extra-income"></td>
+                            <td><input type="number" class="increase" name="passive3-training-increase"></td>
+                            <td><input type="number" class="final"    name="final3-passive" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Пассивный доход</td>
+                            <td><input type="text"   class="title"    name="passive4-title"></td>
+                            <td><input type="number" class="base"     name="passive4"></td>
+                            <td><input type="number" class="extra"    name="passive4-extra-income"></td>
+                            <td><input type="number" class="increase" name="passive4-training-increase"></td>
+                            <td><input type="number" class="final"    name="final4-passive" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Пассивный доход</td>
+                            <td><input type="text"   class="title"    name="passive5-title"></td>
+                            <td><input type="number" class="base"     name="passive5"></td>
+                            <td><input type="number" class="extra"    name="passive5-extra-income"></td>
+                            <td><input type="number" class="increase" name="passive5-training-increase"></td>
+                            <td><input type="number" class="final"    name="final5-passive" readonly></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="total">
+                    <label for="total-income">Общий доход из всех источников:</label>
+                    <input type="number" id="total-income" name="total-income" readonly>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Расходы</h2>
+                <div class="expense-category">
+                    <div id="status">
+                        <label for="student">Студент:</label>
+                        <input type="radio" name="status" id="student" value="student" checked>
+                        <label for="worker">Рабочий:</label>
+                        <input type="radio" name="status" id="worker" value="worker">
+                    </div>
+                    <label for="rent">
+                        Жильё: 
+                        <div class="inline" id="rent-price">200</div>$:
+                        <label for="rent-full" class="inline">целиком</label>
+                        <input type="radio" name="rent" id="rent-full" value="1">
+                        <label for="rent-discount" class="inline">половина</label>
+                        <input type="radio" name="rent" id="rent-discount" value="0.5">
+                        <label for="rent-zero" class="inline">ничего</label>
+                        <input type="radio" name="rent" id="rent-zero" value="0">
+                    </label>
+                    <input type="number" id="rent" name="rent">
+                    <label for="food">
+                        Питание: 
+                        <input type="checkbox" name="food1">
+                        <input type="checkbox" name="food2">
+                        <div class="inline" id="food-price">120</div>
+                        $
+                    </label>
+                    <input type="number" id="food" name="food">
+                    <label for="internet">
+                        Связь, интернет: 
+                        <input type="checkbox" name="internet1">
+                        <input type="checkbox" name="internet2">
+                        <div class="inline" id="internet-price">10</div>
+                        $
+                    </label>
+                    <input type="number" id="internet" name="internet">
+                    <label for="transport">
+                        Проезд: 
+                        <input type="checkbox" name="transport1">
+                        <input type="checkbox" name="transport2">
+                        <div class="inline" id="transport-price">30</div>
+                        $
+                    </label>
+                    <input type="number" id="transport" name="transport">
+                    <div>
+                        Дети: 
+                        <input type="checkbox" id="children1" name="children1">
+                        <input type="checkbox" id="children2" name="children2">
+                        <input type="checkbox" id="children3" name="children3">
+                        <div class="inline" id="children-price">100</div>
+                        $
+                    </div> 
+                    <input type="number" id="children" name="children" readonly>
+                </div>
+                <div class="total">
+                    <label for="total-expenses">Итого расходов на жизнь:</label>
+                    <input type="number" id="total-expenses" name="total-expenses" readonly>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Микрокредиты в банках и "финансовых организациях"</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Тип организации</th>
+                            <th>Сумма кредита</th>
+                            <th>% годовых</th>
+                            <th>% в месяц</th>
+                            <th>Ежемесячный платеж</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Банк</td>
+                            <td><input type="number" name="bank-loan" id="bank-loan"></td>
+                            <td>36%</td>
+                            <td>3%</td>
+                            <td><input type="number" name="bank-monthly-payment" id="bank-payment" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Контора-ростовщик</td>
+                            <td><input type="number" name="lender-loan" id="lender-loan"></td>
+                            <td>360%</td>
+                            <td>30%</td>
+                            <td><input type="number" name="lender-monthly-payment" id="lender-payment" readonly></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="total">
+                    <label for="total-loan-expenses">Итого расходов по кредитам:</label>
+                    <input type="number" id="total-loan-expenses" name="total-loan-expenses" readonly>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="total">
+                    <label for="total-monthly-expenses">Всего расходов за месяц с учетом платежей по кредитам:</label>
+                    <input type="number" id="total-monthly-expenses" name="total-monthly-expenses" readonly>
+                </div>
+                <div class="total">
+                    <label for="balance">Сальдо на конец месяца (все доходы минус все расходы):</label>
+                    <input type="number" id="balance" name="balance" readonly>
+                </div>
+            </div>
+            <p>---</p>
+            <button id="clearCache" type="reset">Очистить всё</button>
+            <p>---</p>
+        </form>
+    </div>
+</body>
+<script>
+    function saveFormData() {
+        const form = document.getElementById('game-form')
+        const formData = new FormData(form)
+        const data = {}
+    
+        formData.forEach((value, key) => {
+            data[key] = value
+        })
+        localStorage.setItem('formData', JSON.stringify(data))
+    }
+    
+    function loadFormData() {
+        const formData = JSON.parse(localStorage.getItem('formData'))
+        if (formData) {
+            for (const key in formData) {
+                const elements = document.getElementsByName(key)
+                for (i = 0; i < elements.length; ++i) {
+                    const element = elements[i]
+                    if (element) {
+                        if (element.type === 'radio' || element.type === 'checkbox') {
+                            if (element.value === formData[key]) {
+                                element.checked = true
+                            }
+                        } else {
+                            element.value = formData[key]
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function calculateIncomes() {
+        const bases = document.getElementsByClassName("base")
+        const extras = document.getElementsByClassName("extra")
+        const increases = document.getElementsByClassName("increase")
+        const finals = document.getElementsByClassName("final")
+        let totalIncome = 0
+
+        if (bases.length == extras.length && increases.length == finals.length && bases.length == finals.length) {
+            for (i = 0; i < bases.length; ++i) {
+                const base = parseFloat(bases[i].value) || 0
+                const extra = parseFloat(extras[i].value) || 0
+                const increase = parseFloat(increases[i].value) || 0
+                const final = base + extra + base * increase / 100
+                finals[i].value = final
+                totalIncome += final
+            }
+            document.getElementById("total-income").value = totalIncome
+        } else {
+            throw new Error("Wrong table scruct")
+        }
+        return totalIncome
+    }
+
+    function getSelectedValue(name) {
+        const radios = document.getElementsByName(name)
+        for (i = 0, length = radios.length; i < length; i++) {
+            if (radios[i].checked) {
+                return radios[i].value
+            }
+        }
+    }
+
+    function updateBaseExpenses() {
+        const status = getSelectedValue("status")
+        switch (status) {
+            case 'student':
+            document.getElementById('rent-price').innerHTML = '30'
+            document.getElementById('food-price').innerHTML = '120'
+            document.getElementById('internet-price').innerHTML = '10'
+            document.getElementById('transport-price').innerHTML = '20'
+            document.getElementById('children-price').innerHTML = '100'
+            break
+            case 'worker':
+            document.getElementById('rent-price').innerHTML = '200'
+            document.getElementById('food-price').innerHTML = '120'
+            document.getElementById('internet-price').innerHTML = '10'
+            document.getElementById('transport-price').innerHTML = '30'
+            document.getElementById('children-price').innerHTML = '100'
+            break
+            default:
+            throw new Error("Wrong status")
+        }
+    }
+
+    function getCheckedCount(name) {
+        let counter = 0
+        for (var j = 1; j <= 3; j++) {
+            const elements = document.getElementsByName(name + j)
+            for (i = 0, length = elements.length; i < length; i++) {
+                const element = elements[i]
+                if (element && element.checked) {
+                    ++counter
+                }
+            }
+        }
+        return counter
+    }
+
+    function calculateExpenses() {
+        const baseRent = parseFloat(document.getElementById("rent-price").innerHTML) || 0
+        const baseFood = parseFloat(document.getElementById("food-price").innerHTML) || 0
+        const baseInternet = parseFloat(document.getElementById("internet-price").innerHTML) || 0
+        const baseTransport = parseFloat(document.getElementById("transport-price").innerHTML) || 0
+        const baseChildren = parseFloat(document.getElementById("children-price").innerHTML) || 0
+        const rent = baseRent * parseFloat(getSelectedValue("rent"))||0
+        const food = baseFood * getCheckedCount("food")
+        const internet = baseInternet * getCheckedCount("internet")
+        const transport = baseTransport * getCheckedCount("transport")
+        const children = baseChildren * getCheckedCount("children")
+        const totalLifeExpenses = children + transport + internet + food + rent
+        const bankLoan = parseFloat(document.getElementById("bank-loan").value) || 0
+        const lenderLoan = parseFloat(document.getElementById("lender-loan").value) || 0
+        const bankPayment = bankLoan * 0.03
+        const lenderPayment = lenderLoan * 0.3
+        const totalLoan = bankPayment + lenderPayment
+        const totalExpenses = totalLifeExpenses + totalLoan
+        document.getElementById("food").value = food
+        document.getElementById("rent").value = rent
+        document.getElementById("internet").value = internet
+        document.getElementById("transport").value = transport
+        document.getElementById("children").value = children
+        document.getElementById("total-expenses").value = totalLifeExpenses
+        document.getElementById("bank-payment").value = bankPayment
+        document.getElementById("lender-payment").value = lenderPayment
+        document.getElementById("total-loan-expenses").value = totalLoan 
+        document.getElementById("total-monthly-expenses").value = totalExpenses
+        return totalExpenses
+    }
+
+    function calculateBalance(totalIncome, totalExpenses) {
+        document.getElementById("balance").value = totalIncome - totalExpenses
+    }
+
+    function calculateTotals() {
+        updateBaseExpenses()
+        calculateBalance(calculateIncomes(), calculateExpenses())
+    }
+
+    window.onload = function() {
+        loadFormData()
+        calculateTotals()
+    }
+
+    document.getElementById('clearCache').addEventListener('click', function() {
+        localStorage.clear()
+    })
+
+    document.getElementById("game-form").addEventListener("input", event => {
+        calculateTotals()
+        saveFormData()
+    })
+</script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    
+    .container {
+        min-width: 600px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+        text-align: center;
+    }
+    
+    .section {
+        margin-bottom: 20px;
+    }
+    
+    .section h2 {
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 10px;
+    }
+    
+    .expense-category h3 {
+        margin-bottom: 10px;
+    }
+    
+    label {
+        margin: 5px 0;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin: 5px 0 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+    
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+    
+    .total {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .total label {
+        flex: 1;
+    }
+    
+    .total input {
+        flex: 2;
+    }
+    .inline {
+        display: inline;
+    }
+
+    #status {
+        display: block;
+        margin-bottom: 20px;
+    }
+    
+</style>
+</html>
