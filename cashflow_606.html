@@ -30,10 +30,10 @@
                             <td><input type="number" class="final"    name="final-salary" readonly disabled></td>
                         </tr>
                         <tr>
-                            <td><input type="text"   class="title"    name="job2-title" placeholder="Второй активный доход"></td>
-                            <td><input type="number" class="base"     name="job2"></td>
-                            <td><input type="number" class="extra"    name="job2-extra-income"></td>
-                            <td><input type="number" class="increase" name="job2-training-increase"></td>
+                            <td><input type="text"   class="title"    name="job2-title" placeholder="Второй активный доход" id="job2-title"></td>
+                            <td><input type="number" class="base"     name="job2" id="job2"></td>
+                            <td><input type="number" class="extra"    name="job2-extra-income" id="job2-extra-income"></td>
+                            <td><input type="number" class="increase" name="job2-training-increase" id="job2-training-increase"></td>
                             <td><input type="number" class="final"    name="final-job2" readonly disabled></td>
                         </tr>
                         <tr>
@@ -45,15 +45,15 @@
                         </tr>
                         <tr id="addRow">
                             <td colspan="2"><button type="button" onclick="addNewRow();calculateIncomes()">Добавить новый источник дохода</button></td>
-                            <td></td>
+                            <td><input type="hidden" id="total-income-counter" name="total-income-counter" readonly></td>
                             <td></td>
                             <td></td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="total">
-                    <label for="total-income-counter">Всего источников дохода:</label>
-                    <input type="number" id="total-income-counter" name="total-income-counter" readonly>
+                    <label for="total-income-counter">Всего от пассивных источников дохода:</label>
+                    <input type="number" id="total-passive-income" name="total-passive-income" readonly disabled>
                 </div>
                 <div class="total">
                     <label for="total-income">Общий доход из всех источников:</label>
@@ -164,11 +164,11 @@
                             <div id="children-count">
                                 <input type="radio" name="children-count" id="children-count-extra" value="3">
                                 <label for="children-count-extra" class="btn"> 3 </label>
-                                <input type="radio" name="children-count" id="children-count-full" value="2" checked>
+                                <input type="radio" name="children-count" id="children-count-full" value="2">
                                 <label for="children-count-full" class="btn"> 2 </label>
                                 <input type="radio" name="children-count" id="children-count-discount" value="1">
                                 <label for="children-count-discount" class="btn"> 1 </label>
-                                <input type="radio" name="children-count" id="children-count-zero" value="0">
+                                <input type="radio" name="children-count" id="children-count-zero" value="0" checked>
                                 <label for="children-count-zero" class="btn"> 0 </label>
                             </div>
                         </td>
@@ -324,6 +324,7 @@
         const increases = document.getElementsByClassName("increase")
         const finals = document.getElementsByClassName("final")
         let totalIncome = 0
+        let totalPassiveIncome = 0
 
         if (bases.length == extras.length && increases.length == finals.length && bases.length == finals.length) {
             for (i = 0; i < bases.length; ++i) {
@@ -331,10 +332,14 @@
                 const extra = parseFloat(extras[i].value) || 0
                 const increase = parseFloat(increases[i].value) || 0
                 const final = (base + extra) * (1 + increase / 100)
-                finals[i].value = final
+                finals[i].value = final.toFixed(2)
                 totalIncome += final
+                if (i > 1) {
+                    totalPassiveIncome += final
+                }
             }
-            document.getElementById("total-income").value = totalIncome
+            document.getElementById("total-income").value = totalIncome.toFixed(2)
+            document.getElementById("total-passive-income").value = totalPassiveIncome.toFixed(2)
             document.getElementById("total-income-counter").value = incomeTableBody.rows.length - 1
         } else {
             throw new Error("Wrong table scruct")
@@ -351,22 +356,38 @@
         }
     }
 
+    function setStudent() {
+        document.getElementById('rent-price').innerHTML = '30'
+        document.getElementById('food-price').innerHTML = '120'
+        document.getElementById('internet-price').innerHTML = '10'
+        document.getElementById('transport-price').innerHTML = '20'
+        document.getElementById('children-price').innerHTML = '100'
+        const job2Title = document.getElementById('job2-title')
+        job2Title.value = 'Стипендия'
+        const job2 = document.getElementById('job2')
+        job2.value = 30
+        const job2ExtraIncome = document.getElementById('job2-extra-income')
+        job2ExtraIncome.value = 0
+        const job2TrainingIncrease = document.getElementById('job2-training-increase')
+        job2TrainingIncrease.value = 0
+    }
+
+    function setWorker() {
+        document.getElementById('rent-price').innerHTML = '200'
+        document.getElementById('food-price').innerHTML = '120'
+        document.getElementById('internet-price').innerHTML = '10'
+        document.getElementById('transport-price').innerHTML = '30'
+        document.getElementById('children-price').innerHTML = '100'
+    }
+
     function updateBaseExpenses() {
         const status = getSelectedValue("status")
         switch (status) {
             case 'student':
-            document.getElementById('rent-price').innerHTML = '30'
-            document.getElementById('food-price').innerHTML = '120'
-            document.getElementById('internet-price').innerHTML = '10'
-            document.getElementById('transport-price').innerHTML = '20'
-            document.getElementById('children-price').innerHTML = '100'
+            setStudent()
             break
             case 'worker':
-            document.getElementById('rent-price').innerHTML = '200'
-            document.getElementById('food-price').innerHTML = '120'
-            document.getElementById('internet-price').innerHTML = '10'
-            document.getElementById('transport-price').innerHTML = '30'
-            document.getElementById('children-price').innerHTML = '100'
+            setWorker()
             break
             default:
             throw new Error("Wrong status")
@@ -391,16 +412,16 @@
         const lenderPayment = lenderLoan * 0.3
         const totalLoan = bankPayment + lenderPayment
         const totalExpenses = totalLifeExpenses + totalLoan
-        document.getElementById("food").value = food
-        document.getElementById("rent").value = rent
-        document.getElementById("internet").value = internet
-        document.getElementById("transport").value = transport
-        document.getElementById("children").value = children
-        document.getElementById("total-expenses").value = totalLifeExpenses
-        document.getElementById("bank-payment").value = bankPayment
-        document.getElementById("lender-payment").value = lenderPayment
-        document.getElementById("total-loan-expenses").value = totalLoan 
-        document.getElementById("total-monthly-expenses").value = totalExpenses
+        document.getElementById("food").value = food.toFixed(2)
+        document.getElementById("rent").value = rent.toFixed(2)
+        document.getElementById("internet").value = internet.toFixed(2)
+        document.getElementById("transport").value = transport.toFixed(2)
+        document.getElementById("children").value = children.toFixed(2)
+        document.getElementById("total-expenses").value = totalLifeExpenses.toFixed(2)
+        document.getElementById("bank-payment").value = bankPayment.toFixed(2)
+        document.getElementById("lender-payment").value = lenderPayment.toFixed(2)
+        document.getElementById("total-loan-expenses").value = totalLoan.toFixed(2)
+        document.getElementById("total-monthly-expenses").value = totalExpenses.toFixed(2)
         return totalExpenses
     }
 
@@ -426,6 +447,7 @@
 
     document.getElementById('clearCache').addEventListener('click', function() {
         localStorage.clear()
+        location.reload()
     })
 
     document.getElementById("game-form").addEventListener("input", event => {
