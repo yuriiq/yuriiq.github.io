@@ -8,6 +8,7 @@
 <body>
     <div class="container">
         <h1>Калькулятор 606</h1>
+        <p id="goal_ok">Цель достигнута!</p>
         <form id="game-form">
             <div class="section">
                 <h2>Доходы</h2>
@@ -43,8 +44,8 @@
                             <td><input type="number" class="increase" name="static-passive-training-increase"></td>
                             <td><input type="number" class="final"    name="static-passive-final" readonly disabled></td>
                         </tr>
-                        <tr id="addRow">
-                            <td colspan="2"><button type="button" onclick="addNewRow();calculateIncomes()">Добавить новый источник дохода</button></td>
+                        <tr id="addIncome">
+                            <td colspan="2"><button type="button" onclick="addNewIncome()">Добавить новый источник дохода</button></td>
                             <td><input type="hidden" id="total-income-counter" name="total-income-counter" readonly></td>
                             <td></td>
                             <td></td>
@@ -194,7 +195,7 @@
                             <th>Ежемесячный платеж</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="loan-table">
                         <tr>
                             <td>Банк</td>
                             <td><input type="number" name="bank-loan" id="bank-loan"></td>
@@ -204,10 +205,16 @@
                         </tr>
                         <tr>
                             <td>Ростовщик</td>
-                            <td><input type="number" name="lender-loan" id="lender-loan"></td>
+                            <td><input type="number" name="lender-loan" class="lender-loan"></td>
                             <td>360%</td>
                             <td>30%</td>
-                            <td><input type="number" name="lender-monthly-payment" id="lender-payment" readonly disabled></td>
+                            <td><input type="number" name="lender-payment" class="lender-payment" readonly disabled></td>
+                        </tr>
+                        <tr id="addLoan">
+                            <td colspan="2"><button type="button" onclick="addNewLoan()">Добавить новый кредит</button></td>
+                            <td><input type="hidden" id="total-loan-counter" name="total-loan-counter" readonly></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -235,12 +242,12 @@
 </body>
 <script>
     const incomeTableBody = document.getElementById('income-table');
+    const loanTableBody = document.getElementById('loan-table');
 
     function saveFormData() {
         const form = document.getElementById('game-form')
         const formData = new FormData(form)
         const data = {}
-    
         formData.forEach((value, key) => {
             data[key] = value
         })
@@ -250,9 +257,9 @@
     function loadFormData() {
         const formData = JSON.parse(localStorage.getItem('formData'))
         if (formData) {
-            createNewRows(formData['total-income-counter'])
+            createNewIncomeRows(formData['total-income-counter'])
+            createNewLoanRows(formData['total-loan-counter'])
             for (const key in formData) {
-                console.log(key, formData[key])
                 const elements = document.getElementsByName(key)
                 for (i = 0; i < elements.length; ++i) {
                     const element = elements[i]
@@ -270,15 +277,14 @@
         }
     }
 
-    function deleteRow(row) {
+    function deleteIncomeRow(row) {
         incomeTableBody.removeChild(row)
         calculateTotals()
         saveFormData()
     }
 
-    function addNewRow() {
+    function addNewIncome() {
         const newRow = document.createElement('tr');
-
         const titleCell = document.createElement('td')
         const inputTitle = document.createElement('input')
         inputTitle.type = 'text'
@@ -287,7 +293,6 @@
         inputTitle.name = 'passive-title' + incomeTableBody.rows.length
         titleCell.appendChild(inputTitle);
         newRow.appendChild(titleCell);
-
         const classNames = ['base', 'extra', 'increase', 'final' ]
         classNames.forEach(name => {
             const extraCell = document.createElement('td')
@@ -298,23 +303,66 @@
             extraCell.appendChild(inputExtra)
             newRow.appendChild(extraCell)
         })
-
         const deleteCell = document.createElement('td');
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'X';
         deleteButton.type="button"
-        deleteButton.addEventListener('click', () => deleteRow(newRow));
+        deleteButton.addEventListener('click', () => deleteIncomeRow(newRow));
         //TODO: fix delete bug 
         // deleteCell.appendChild(deleteButton);
         // newRow.appendChild(deleteCell)
         incomeTableBody.appendChild(newRow);
-        const addButton = document.getElementById("addRow")
+        const addButton = document.getElementById("addIncome")
         incomeTableBody.appendChild(addButton);
     }
 
-    function createNewRows(maximum) {
+    function createNewIncomeRows(maximum) {
         for (i = incomeTableBody.rows.length; i <= maximum; ++i) {
-            addNewRow()
+            addNewIncome()
+        }
+    }
+
+    function addNewLoan() {
+        const newRow = document.createElement('tr');
+        //
+        const nameCell = document.createElement('td')
+        nameCell.innerHTML = "Ростовщик"
+        newRow.appendChild(nameCell)  
+        //
+        const inputCell = document.createElement('td')
+        const inputTitle = document.createElement('input')
+        inputTitle.type = 'number'
+        inputTitle.className = 'lender-loan'
+        inputTitle.name = 'lender-loan' + loanTableBody.rows.length
+        inputCell.appendChild(inputTitle)
+        newRow.appendChild(inputCell)
+        //
+        const annualCell = document.createElement('td')
+        annualCell.innerHTML = "360%"
+        newRow.appendChild(annualCell)
+        //
+        const monthlyCell = document.createElement('td')
+        monthlyCell.innerHTML = "30%"
+        newRow.appendChild(monthlyCell)
+        //
+        const outputCell = document.createElement('td')
+        const inputPayment = document.createElement('input')
+        inputPayment.type = 'number'
+        inputPayment.disabled = true
+        inputPayment.readOnly = true
+        inputPayment.className = 'lender-payment'
+        inputPayment.name = 'lender-payment' + loanTableBody.rows.length
+        outputCell.appendChild(inputPayment)
+        newRow.appendChild(outputCell)
+        loanTableBody.appendChild(newRow)
+        //
+        const addButton = document.getElementById("addLoan")
+        loanTableBody.appendChild(addButton)
+    }
+
+    function createNewLoanRows(maximum) {
+        for (i = loanTableBody.rows.length; i <= maximum; ++i) {
+            addNewLoan()
         }
     }
 
@@ -407,11 +455,23 @@
         const children = baseChildren * parseFloat(getSelectedValue("children")) * parseFloat(getSelectedValue("children-count")) || 0
         const totalLifeExpenses = children + transport + internet + food + rent
         const bankLoan = parseFloat(document.getElementById("bank-loan").value) || 0
-        const lenderLoan = parseFloat(document.getElementById("lender-loan").value) || 0
         const bankPayment = bankLoan * 0.03
-        const lenderPayment = lenderLoan * 0.3
-        const totalLoan = bankPayment + lenderPayment
+        //
+        const lenderLoans = document.getElementsByClassName("lender-loan")
+        const lenderPayments = document.getElementsByClassName("lender-payment")
+        let totalLoan = bankPayment 
+        if (lenderLoans.length == lenderPayments.length) {
+            for (i = 0; i < lenderLoans.length; ++i) {
+                const lenderLoan = parseFloat(lenderLoans[i].value) || 0
+                const final = lenderLoan * 0.3
+                lenderPayments[i].value = final
+                totalLoan += final
+            }
+        } else {
+            throw new Error("Wrong table scruct")
+        }
         const totalExpenses = totalLifeExpenses + totalLoan
+        //
         document.getElementById("food").value = food.toFixed(2)
         document.getElementById("rent").value = rent.toFixed(2)
         document.getElementById("internet").value = internet.toFixed(2)
@@ -419,8 +479,8 @@
         document.getElementById("children").value = children.toFixed(2)
         document.getElementById("total-expenses").value = totalLifeExpenses.toFixed(2)
         document.getElementById("bank-payment").value = bankPayment.toFixed(2)
-        document.getElementById("lender-payment").value = lenderPayment.toFixed(2)
         document.getElementById("total-loan-expenses").value = totalLoan.toFixed(2)
+        document.getElementById("total-loan-counter").value = loanTableBody.rows.length - 1
         document.getElementById("total-monthly-expenses").value = totalExpenses.toFixed(2)
         return totalExpenses
     }
@@ -434,10 +494,20 @@
             element.classList.remove('negative')
         }
     }
+    function targetLabelUpdate() {
+        const passiveTotalIncome = parseFloat(document.getElementById("total-passive-income").value) || 0
+        const totalExpense = parseFloat(document.getElementById("total-monthly-expenses").value) || 0
+        if (passiveTotalIncome > totalExpense) {
+            document.getElementById('goal_ok').style.display = "block"; 
+        } else {
+            document.getElementById('goal_ok').style.display = "none"; 
+        }
+    }
 
     function calculateTotals() {
         updateBaseExpenses()
         calculateBalance(calculateIncomes(), calculateExpenses())
+        targetLabelUpdate()
     }
 
     window.onload = function() {
@@ -540,6 +610,7 @@
 
     label.btn {
         display: inline-block;
+        min-width: 30px;
         padding: 5px 5px;
         margin: 0 5px;
         border: 1px solid #ccc;
@@ -591,10 +662,11 @@
     .negative {
         color:red;
     }
-    #children-count label {
-        min-width: 30px;
+    #goal_ok {
+        color: #700070;
+        background-color: #028202;
+        font-size: x-large;
+        display: none;
     }
-
-    
 </style>
 </html>
