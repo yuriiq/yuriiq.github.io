@@ -15,7 +15,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Деятельность</th>
+                            <th>Тип дохода</th>
                             <th>Базовый доход</th>
                             <th>Прирост +$</th>
                             <th>Прирост +%</th>
@@ -45,10 +45,8 @@
                             <td><input type="number" class="final"    name="static-passive-final" readonly disabled></td>
                         </tr>
                         <tr id="addIncome">
-                            <td colspan="2"><button type="button" onclick="addNewIncome()">Добавить новый источник дохода</button></td>
+                            <td colspan="4"><button type="button" onclick="addNewIncome()">Добавить новый источник дохода</button></td>
                             <td><input type="hidden" id="total-income-counter" name="total-income-counter" readonly></td>
-                            <td></td>
-                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -92,7 +90,7 @@
                         
                     </tr>
                     <tr>
-                        <td>Питание</td>
+                        <td>Еда</td>
                         <td>
                             <div>
                                 <input type="radio" name="food" id="food-extra" value="2">
@@ -109,7 +107,7 @@
                         <td><input type="number" id="food" name="food-total" readonly disabled></td>
                     </tr>
                     <tr>
-                        <td>Связь, интернет</td>
+                        <td>Связь</td>
                         <td>
                             <div>
                                 <input type="radio" name="internet" id="internet-extra" value="2">
@@ -143,7 +141,7 @@
                         <td><input type="number" id="transport" name="transport" readonly disabled></td>
                     </tr>
                     <tr>
-                        <td>Дети</td>
+                        <td rowspan="2">Дети</td>
                         <td>
                             <div>
                                 <input type="radio" name="children" id="children-extra" value="2">
@@ -156,11 +154,10 @@
                                 <label for="children-zero" class="btn">0%</label>
                             </div>
                         </td>
-                        <td><div class="inline" id="children-price">100</div>$</td>
-                        <td><input type="number" id="children" name="children" readonly disabled></td>
+                        <td rowspan="2"><div class="inline" id="children-price">100</div>$</td>
+                        <td rowspan="2"><input type="number" id="children" name="children" readonly disabled></td>
                     </tr>
                     <tr>
-                        <td>Количество детей</td>
                         <td>
                             <div id="children-count">
                                 <input type="radio" name="children-count" id="children-count-extra" value="3">
@@ -173,8 +170,6 @@
                                 <label for="children-count-zero" class="btn"> 0 </label>
                             </div>
                         </td>
-                        <td></td>
-                        <td></td>
                     </tr>
                 </table>
                 <div class="total">
@@ -211,10 +206,8 @@
                             <td><input type="number" name="lender-payment" class="lender-payment" readonly disabled></td>
                         </tr>
                         <tr id="addLoan">
-                            <td colspan="2"><button type="button" onclick="addNewLoan()">Добавить новый кредит</button></td>
+                            <td colspan="4"><button type="button" onclick="addNewLoan()">Добавить новый кредит</button></td>
                             <td><input type="hidden" id="total-loan-counter" name="total-loan-counter" readonly></td>
-                            <td></td>
-                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -534,7 +527,7 @@
     }
     
     .container {
-        min-width: 600px;
+        min-width: 510px;
         margin: 20px auto;
         background: #fff;
         padding: 20px;
@@ -571,7 +564,7 @@
     }
 
     input[type="number"] {
-        width: 70px;
+        width: 60px;
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 4px;
