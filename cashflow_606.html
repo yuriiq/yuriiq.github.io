@@ -297,6 +297,10 @@
         classNames.forEach(name => {
             const extraCell = document.createElement('td')
             const inputExtra = document.createElement('input')
+            if (name == 'final') {
+                inputExtra.readOnly = true
+                inputExtra.disabled = true
+            }
             inputExtra.type = 'number'
             inputExtra.className = name
             inputExtra.name = 'passive-' + name + incomeTableBody.rows.length
@@ -410,14 +414,10 @@
         document.getElementById('internet-price').innerHTML = '10'
         document.getElementById('transport-price').innerHTML = '20'
         document.getElementById('children-price').innerHTML = '100'
-        const job2Title = document.getElementById('job2-title')
-        job2Title.value = 'Стипендия'
-        const job2 = document.getElementById('job2')
-        job2.value = 30
-        const job2ExtraIncome = document.getElementById('job2-extra-income')
-        job2ExtraIncome.value = 0
-        const job2TrainingIncrease = document.getElementById('job2-training-increase')
-        job2TrainingIncrease.value = 0
+        document.getElementById('job2-title').value = 'Стипендия'
+        document.getElementById('job2').value = 30
+        document.getElementById('job2-extra-income').value = 0
+        document.getElementById('job2-training-increase').value = 0
     }
 
     function setWorker() {
@@ -464,7 +464,7 @@
             for (i = 0; i < lenderLoans.length; ++i) {
                 const lenderLoan = parseFloat(lenderLoans[i].value) || 0
                 const final = lenderLoan * 0.3
-                lenderPayments[i].value = final
+                lenderPayments[i].value = final.toFixed(2)
                 totalLoan += final
             }
         } else {
