@@ -487,7 +487,7 @@
 
     function calculateBalance(totalIncome, totalExpenses) {
         const element = document.getElementById("balance")
-        element.value = totalIncome - totalExpenses
+        element.value = (totalIncome - totalExpenses).toFixed(2)
         if (totalIncome < totalExpenses) {
             element.classList.add('negative')
         } else {
