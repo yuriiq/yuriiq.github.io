@@ -27,22 +27,40 @@
                             <td><input type="text"   class="title"    name="job-title" placeholder="Активный доход"></td>
                             <td><input type="number" class="base"     name="starting-salary"></td>
                             <td><input type="number" class="extra"    name="extra-income"></td>
-                            <td><input type="number" class="increase" name="training-increase"></td>
+                            <td>
+                                <select class="increase" name="training-increase">
+                                    <option class="training-work"></option>
+                                    <option class="training-self"></option>
+                                    <option class="training-startup"></option>
+                              </select>
+                            </td>
                             <td><input type="number" class="final"    name="final-salary" readonly disabled></td>
                         </tr>
                         <tr>
                             <td><input type="text"   class="title"    name="job2-title" placeholder="Второй активный доход" id="job2-title"></td>
                             <td><input type="number" class="base"     name="job2" id="job2"></td>
                             <td><input type="number" class="extra"    name="job2-extra-income" id="job2-extra-income"></td>
-                            <td><input type="number" class="increase" name="job2-training-increase" id="job2-training-increase"></td>
+                            <td>
+                                <select class="increase" name="job2-training-increase" id="job2-training-increase">
+                                    <option class="training-work"></option>
+                                    <option class="training-self"></option>
+                                    <option class="training-startup"></option>
+                              </select>
+                            </td>
                             <td><input type="number" class="final"    name="final-job2" readonly disabled></td>
                         </tr>
                         <tr>
                             <td><input type="text"   class="title"    name="static-passive-title" placeholder="Пассивный доход"></td>
                             <td><input type="number" class="base"     name="static-passive"></td>
                             <td><input type="number" class="extra"    name="static-passive-extra-income"></td>
-                            <td><input type="number" class="increase" name="static-passive-training-increase"></td>
-                            <td><input type="number" class="final"    name="static-passive-final" readonly disabled></td>
+                            <td>
+                                <select class="increase" name="static-passive-training-increase">
+                                    <option class="training-work"></option>
+                                    <option class="training-self"></option>
+                                    <option class="training-startup"></option>
+                              </select>
+                            </td>
+                            <td><input type="number" class="final"  name="static-passive-final" readonly disabled></td>
                         </tr>
                         <tr id="addIncome">
                             <td colspan="4"><button type="button" onclick="addNewIncome()">Добавить новый источник дохода</button></td>
@@ -227,6 +245,34 @@
                     <input type="number" id="balance" name="balance" readonly disabled>
                 </div>
             </div>
+            <div class="section">
+                <h2>Тренинги</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Название</th>
+                            <th colspan="3">Что даёт (+%)</th>
+                        </tr>
+                        <tr>
+                            <th>Работа</th>
+                            <th>Самозанятость</th>
+                            <th>Стартапы</th>
+                        </tr>
+                    </thead>
+                    <tbody id="training-table">
+                        <tr id="addTraining">
+                            <td colspan="3"><button type="button" onclick="addNewTraining()">Добавить новый тренинг</button></td>
+                            <td><input type="hidden" id="total-training-counter" name="total-training-counter" readonly></td>
+                        </tr>
+                        <tr id="totalTraining">
+                            <td>Итого:</td>
+                            <td><input type="number" class=""  name="" id="total-work" readonly disabled></td>
+                            <td><input type="number" class=""  name="" id="total-self" readonly disabled></td>
+                            <td><input type="number" class=""  name="" id="total-startup" readonly disabled></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <p> </p>
             <button id="clearCache" type="reset">Очистить всё</button>
             <p> </p>
@@ -236,6 +282,7 @@
 <script>
     const incomeTableBody = document.getElementById('income-table');
     const loanTableBody = document.getElementById('loan-table');
+    const trainingTableBody = document.getElementById('training-table');
 
     function saveFormData() {
         const form = document.getElementById('game-form')
@@ -252,8 +299,10 @@
         if (formData) {
             createNewIncomeRows(formData['total-income-counter'])
             createNewLoanRows(formData['total-loan-counter'])
+            createNewTrainingRows(formData['total-training-counter'])
             for (const key in formData) {
                 const elements = document.getElementsByName(key)
+                console.log(key, elements.length)
                 for (i = 0; i < elements.length; ++i) {
                     const element = elements[i]
                     if (element) {
@@ -286,28 +335,49 @@
         inputTitle.name = 'passive-title' + incomeTableBody.rows.length
         titleCell.appendChild(inputTitle);
         newRow.appendChild(titleCell);
-        const classNames = ['base', 'extra', 'increase', 'final' ]
-        classNames.forEach(name => {
-            const extraCell = document.createElement('td')
-            const inputExtra = document.createElement('input')
-            if (name == 'final') {
-                inputExtra.readOnly = true
-                inputExtra.disabled = true
-            }
-            inputExtra.type = 'number'
-            inputExtra.className = name
-            inputExtra.name = 'passive-' + name + incomeTableBody.rows.length
-            extraCell.appendChild(inputExtra)
-            newRow.appendChild(extraCell)
-        })
-        const deleteCell = document.createElement('td');
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'X';
-        deleteButton.type="button"
-        deleteButton.addEventListener('click', () => deleteIncomeRow(newRow));
-        //TODO: fix delete bug 
-        // deleteCell.appendChild(deleteButton);
-        // newRow.appendChild(deleteCell)
+        // 
+        const baseCell = document.createElement('td')
+        const inputBase = document.createElement('input')
+        inputBase.type = 'number'
+        inputBase.className = 'base'
+        inputBase.name = 'passive-base' + incomeTableBody.rows.length
+        baseCell.appendChild(inputBase)
+        newRow.appendChild(baseCell)
+        // 
+        const extraCell = document.createElement('td')
+        const inputExtra = document.createElement('input')
+        inputExtra.type = 'number'
+        inputExtra.className = 'extra'
+        inputExtra.name = 'passive-extra' + incomeTableBody.rows.length
+        extraCell.appendChild(inputExtra)
+        newRow.appendChild(extraCell)
+        //
+        const increaseCell = document.createElement('td')
+        const selectIncrease = document.createElement('select')
+        selectIncrease.className = 'increase'
+        selectIncrease.name = 'passive-increase' + incomeTableBody.rows.length
+        const optionWork = document.createElement('option')
+        optionWork.className = "training-work"
+        selectIncrease.appendChild(optionWork)
+        const optionSelf = document.createElement('option')
+        optionSelf.className = "training-self"
+        selectIncrease.appendChild(optionSelf)
+        const optionStartup = document.createElement('option')
+        optionStartup.className = "training-startup"
+        selectIncrease.appendChild(optionStartup)
+        increaseCell.appendChild(selectIncrease)
+        newRow.appendChild(increaseCell)
+        //
+        const finalCell = document.createElement('td')
+        const inputFinal = document.createElement('input')
+        inputFinal.readOnly = true
+        inputFinal.disabled = true
+        inputFinal.type = 'number'
+        inputFinal.className = 'final'
+        inputFinal.name = 'passive-final' + incomeTableBody.rows.length
+        finalCell.appendChild(inputFinal)
+        newRow.appendChild(finalCell)
+        //
         incomeTableBody.appendChild(newRow);
         const addButton = document.getElementById("addIncome")
         incomeTableBody.appendChild(addButton);
@@ -316,6 +386,39 @@
     function createNewIncomeRows(maximum) {
         for (i = incomeTableBody.rows.length; i <= maximum; ++i) {
             addNewIncome()
+        }
+    }
+
+    function addNewTraining() {
+        const newRow = document.createElement('tr');
+        const titleCell = document.createElement('td')
+        const inputTitle = document.createElement('input')
+        inputTitle.type = 'text'
+        inputTitle.className = 'title'
+        inputTitle.name = 'training-title' + trainingTableBody.rows.length
+        titleCell.appendChild(inputTitle);
+        newRow.appendChild(titleCell);
+        const classNames = ['work', 'self', 'startup' ]
+        classNames.forEach(name => {
+            const extraCell = document.createElement('td')
+            const inputExtra = document.createElement('input')
+            inputExtra.type = 'number'
+            inputExtra.className = name
+            inputExtra.name = 'training-' + name + trainingTableBody.rows.length
+            extraCell.appendChild(inputExtra)
+            newRow.appendChild(extraCell)
+        })
+
+        trainingTableBody.appendChild(newRow);
+        const addButton = document.getElementById("addTraining")
+        trainingTableBody.appendChild(addButton);
+        const totalRow = document.getElementById("totalTraining")
+        trainingTableBody.appendChild(totalRow);
+    }
+
+    function createNewTrainingRows(maximum) {
+        for (i = trainingTableBody.rows.length; i <= maximum; ++i) {
+            addNewTraining()
         }
     }
 
@@ -390,6 +493,47 @@
             throw new Error("Wrong table scruct")
         }
         return totalIncome
+    }
+
+    function calculateTrainings() {
+        const works = document.getElementsByClassName("work")
+        const selfs = document.getElementsByClassName("self")
+        const startups = document.getElementsByClassName("startup")
+        let totalWork = 0
+        let totalSelf = 0
+        let totalStartup = 0
+        if (works.length == selfs.length && startups.length == selfs.length) {
+            for (i = 0; i < works.length; ++i) {
+                totalWork += parseFloat(works[i].value) || 0
+                totalSelf += parseFloat(selfs[i].value) || 0
+                totalStartup += parseFloat(startups[i].value) || 0
+            }
+            document.getElementById("total-work").value = totalWork.toFixed(2)
+            document.getElementById("total-self").value = totalSelf.toFixed(2)
+            document.getElementById("total-startup").value = totalStartup.toFixed(2)
+            document.getElementById("total-training-counter").value = trainingTableBody.rows.length - 1
+
+            const trainingWorks = document.getElementsByClassName("training-work")
+            for (i = 0; i < trainingWorks.length; ++i) {
+                trainingWorks[i].value = totalWork
+                trainingWorks[i].innerHTML = totalWork + "% Работа"
+            }
+
+            const trainingSelfs = document.getElementsByClassName("training-self")
+            for (i = 0; i < trainingSelfs.length; ++i) {
+                trainingSelfs[i].value = totalSelf
+                trainingSelfs[i].innerHTML = totalSelf + "% Самозанятость"
+            }
+
+            const trainingStartups = document.getElementsByClassName("training-startup")
+            for (i = 0; i < trainingStartups.length; ++i) {
+                trainingStartups[i].value = totalStartup
+                trainingStartups[i].innerHTML = totalStartup + "% Стартап"
+            }
+
+        } else {
+            throw new Error("Wrong table scruct")
+        }
     }
 
     function getSelectedValue(name) {
@@ -499,6 +643,7 @@
 
     function calculateTotals() {
         updateBaseExpenses()
+        calculateTrainings()
         calculateBalance(calculateIncomes(), calculateExpenses())
         targetLabelUpdate()
     }
@@ -600,6 +745,11 @@
     input[type="checkbox"]:checked {
         background-color: #007bff;
     }
+
+    select {
+        width: 60px;
+    }
+
 
     label.btn {
         display: inline-block;
