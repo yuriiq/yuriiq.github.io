@@ -6,9 +6,9 @@
     <title>Калькулятор 606</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Калькулятор 606</h1>
-        <p id="goal_ok">Цель достигнута!</p>
+    <h1>Калькулятор 606</h1>
+    <p class="container" id="goal_ok">Цель достигнута!</p>
+    <div class="container" id="main-container">
         <form id="game-form">
             <div class="section">
                 <h2>Доходы</h2>
@@ -58,192 +58,24 @@
                                     <option class="training-work"></option>
                                     <option class="training-self"></option>
                                     <option class="training-startup"></option>
-                              </select>
+                                </select>
                             </td>
                             <td><input type="number" class="final"  name="static-passive-final" readonly disabled></td>
                         </tr>
-                        <tr id="addIncome">
+                        <tr id="add-income">
                             <td colspan="4"><button type="button" onclick="addNewIncome()">Добавить новый источник дохода</button></td>
                             <td><input type="hidden" id="total-income-counter" name="total-income-counter" readonly></td>
                         </tr>
-                    </tbody>
-                </table>
-                <div class="total">
-                    <label for="total-income-counter">Всего от пассивных источников дохода:</label>
-                    <input type="number" id="total-passive-income" name="total-passive-income" readonly disabled>
-                </div>
-                <div class="total">
-                    <label for="total-income">Общий доход из всех источников:</label>
-                    <input type="number" id="total-income" name="total-income" readonly disabled>
-                </div>
-            </div>
-            
-            <div class="section">
-                <h2>Расходы</h2>
-                <table>
-                    <tr>
-                        <td colspan="4">
-                            <input type="radio" name="status" id="student" value="student" checked>
-                            <label for="student" class="btn">Студент</label>
-                            <input type="radio" name="status" id="worker" value="worker">
-                            <label for="worker" class="btn">Рабочий</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Жильё</td>
-                        <td>
-                            <div>
-                                <input type="radio" name="rent" id="rent-extra" value="2">
-                                <label for="rent-extra" class="btn">200%</label>
-                                <input type="radio" name="rent" id="rent-full" value="1" checked>
-                                <label for="rent-full" class="btn">100%</label>
-                                <input type="radio" name="rent" id="rent-discount" value="0.5">
-                                <label for="rent-discount" class="btn">50%</label>
-                                <input type="radio" name="rent" id="rent-zero" value="0">
-                                <label for="rent-zero" class="btn">0%</label>
-                            </div>
-                        </td>
-                        <td><div class="inline" id="rent-price">200</div>$</td>
-                        <td><input type="number" id="rent" name="rent-total" readonly disabled></td>
-                        
-                    </tr>
-                    <tr>
-                        <td>Еда</td>
-                        <td>
-                            <div>
-                                <input type="radio" name="food" id="food-extra" value="2">
-                                <label for="food-extra" class="btn">200%</label>
-                                <input type="radio" name="food" id="food-full" value="1" checked>
-                                <label for="food-full" class="btn">100%</label>
-                                <input type="radio" name="food" id="food-discount" value="0.5">
-                                <label for="food-discount" class="btn">50%</label>
-                                <input type="radio" name="food" id="food-zero" value="0">
-                                <label for="food-zero" class="btn">0%</label>
-                            </div>
-                        </td>
-                        <td><div class="inline" id="food-price">120</div>$</td>
-                        <td><input type="number" id="food" name="food-total" readonly disabled></td>
-                    </tr>
-                    <tr>
-                        <td>Связь</td>
-                        <td>
-                            <div>
-                                <input type="radio" name="internet" id="internet-extra" value="2">
-                                <label for="internet-extra" class="btn">200%</label>
-                                <input type="radio" name="internet" id="internet-full" value="1" checked>
-                                <label for="internet-full" class="btn">100%</label>
-                                <input type="radio" name="internet" id="internet-discount" value="0.5">
-                                <label for="internet-discount" class="btn">50%</label>
-                                <input type="radio" name="internet" id="internet-zero" value="0">
-                                <label for="internet-zero" class="btn">0%</label>
-                            </div>
-                        </td>
-                        <td><div class="inline" id="internet-price">10</div>$</td>
-                        <td><input type="number" id="internet" name="internet" readonly disabled></td>
-                    </tr>
-                    <tr>
-                        <td>Проезд</td>
-                        <td>
-                            <div>
-                                <input type="radio" name="transport" id="transport-extra" value="2">
-                                <label for="transport-extra" class="btn">200%</label>
-                                <input type="radio" name="transport" id="transport-full" value="1" checked>
-                                <label for="transport-full" class="btn">100%</label>
-                                <input type="radio" name="transport" id="transport-discount" value="0.5">
-                                <label for="transport-discount" class="btn">50%</label>
-                                <input type="radio" name="transport" id="transport-zero" value="0">
-                                <label for="transport-zero" class="btn">0%</label>
-                            </div>
-                        </td>
-                        <td><div class="inline" id="transport-price">30</div>$</td>
-                        <td><input type="number" id="transport" name="transport" readonly disabled></td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">Дети</td>
-                        <td>
-                            <div>
-                                <input type="radio" name="children" id="children-extra" value="2">
-                                <label for="children-extra" class="btn">200%</label>
-                                <input type="radio" name="children" id="children-full" value="1" checked>
-                                <label for="children-full" class="btn">100%</label>
-                                <input type="radio" name="children" id="children-discount" value="0.5">
-                                <label for="children-discount" class="btn">50%</label>
-                                <input type="radio" name="children" id="children-zero" value="0">
-                                <label for="children-zero" class="btn">0%</label>
-                            </div>
-                        </td>
-                        <td rowspan="2"><div class="inline" id="children-price">100</div>$</td>
-                        <td rowspan="2"><input type="number" id="children" name="children" readonly disabled></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div id="children-count">
-                                <input type="radio" name="children-count" id="children-count-extra" value="3">
-                                <label for="children-count-extra" class="btn"> 3 </label>
-                                <input type="radio" name="children-count" id="children-count-full" value="2">
-                                <label for="children-count-full" class="btn"> 2 </label>
-                                <input type="radio" name="children-count" id="children-count-discount" value="1">
-                                <label for="children-count-discount" class="btn"> 1 </label>
-                                <input type="radio" name="children-count" id="children-count-zero" value="0" checked>
-                                <label for="children-count-zero" class="btn"> 0 </label>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <div class="total">
-                    <label for="total-expenses">Итого расходов на жизнь:</label>
-                    <input type="number" id="total-expenses" name="total-expenses" readonly disabled>
-                </div>
-            </div>
-            
-            <div class="section">
-                <h2>Кредиты</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Тип организации</th>
-                            <th>Сумма кредита</th>
-                            <th>% годовых</th>
-                            <th>% в месяц</th>
-                            <th>Ежемесячный платеж</th>
+                        <tr id="total-income-row">
+                            <td colspan="4"><label for="total-income">Итого от всех источников:</label></td>
+                            <td><input type="number" id="total-income" name="total-income" readonly disabled></td>
                         </tr>
-                    </thead>
-                    <tbody id="loan-table">
-                        <tr>
-                            <td>Банк</td>
-                            <td><input type="number" name="bank-loan" id="bank-loan"></td>
-                            <td>36%</td>
-                            <td>3%</td>
-                            <td><input type="number" name="bank-monthly-payment" id="bank-payment" readonly disabled></td>
-                        </tr>
-                        <tr>
-                            <td>Ростовщик</td>
-                            <td><input type="number" name="lender-loan" class="lender-loan"></td>
-                            <td>360%</td>
-                            <td>30%</td>
-                            <td><input type="number" name="lender-payment" class="lender-payment" readonly disabled></td>
-                        </tr>
-                        <tr id="addLoan">
-                            <td colspan="4"><button type="button" onclick="addNewLoan()">Добавить новый кредит</button></td>
-                            <td><input type="hidden" id="total-loan-counter" name="total-loan-counter" readonly></td>
+                        <tr id="total-passive-income-row">
+                            <td colspan="4"><label for="total-passive-income">От пассивных источников:</label></td>
+                            <td><input type="number" id="total-passive-income" name="total-passive-income" readonly disabled></td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="total">
-                    <label for="total-loan-expenses">Итого расходов по кредитам:</label>
-                    <input type="number" id="total-loan-expenses" name="total-loan-expenses" readonly disabled>
-                </div>
-            </div>
-            
-            <div class="section">
-                <div class="total">
-                    <label for="total-monthly-expenses">Всего расходов за месяц с учетом платежей по кредитам:</label>
-                    <input type="number" id="total-monthly-expenses" name="total-monthly-expenses" readonly disabled>
-                </div>
-                <div class="total">
-                    <label for="balance">Сальдо на конец месяца (все доходы минус все расходы):</label>
-                    <input type="number" id="balance" name="balance" readonly disabled>
-                </div>
             </div>
             <div class="section">
                 <h2>Тренинги</h2>
@@ -271,6 +103,169 @@
                             <td><input type="number" class=""  name="" id="total-startup" readonly disabled></td>
                         </tr>
                     </tbody>
+                </table>
+            </div>            
+            <div class="section">
+                <h2>Кредиты</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Тип организации</th>
+                            <th>Сумма кредита</th>
+                            <th>% годовых</th>
+                            <th>% в месяц</th>
+                            <th>Ежемесячный платеж</th>
+                        </tr>
+                    </thead>
+                    <tbody id="loan-table">
+                        <tr>
+                            <td>Банк</td>
+                            <td><input type="number" name="bank-loan" id="bank-loan"></td>
+                            <td>36%</td>
+                            <td>3%</td>
+                            <td><input type="number" name="bank-monthly-payment" id="bank-payment" readonly disabled></td>
+                        </tr>
+                        <tr>
+                            <td>Ростовщик</td>
+                            <td><input type="number" name="lender-loan" class="lender-loan"></td>
+                            <td>360%</td>
+                            <td>30%</td>
+                            <td><input type="number" name="lender-payment" class="lender-payment" readonly disabled></td>
+                        </tr>
+                        <tr id="add-loan">
+                            <td colspan="4"><button type="button" onclick="addNewLoan()">Добавить новый кредит</button></td>
+                            <td><input type="hidden" id="total-loan-counter" name="total-loan-counter" readonly></td>
+                        </tr>
+                        <tr id="total-loan-row">
+                            <td colspan="4"><label for="total-loan-expenses">Итого расходов по кредитам:</label></td>
+                            <td><input type="number" id="total-loan-expenses" name="total-loan-expenses" readonly disabled></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section">
+                <h2>Расходы</h2>
+                <table>
+                    <tr>
+                        <td colspan="4">
+                            <input type="radio" name="status" id="student" value="student" checked>
+                            <label for="student" class="btn">Студент</label>
+                            <input type="radio" name="status" id="worker" value="worker">
+                            <label for="worker" class="btn">Рабочий</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Жильё</td>
+                        <td>
+                            <div class="inline-box">
+                                <input type="radio" name="rent" id="rent-extra" value="2">
+                                <label for="rent-extra" class="btn">200%</label>
+                                <input type="radio" name="rent" id="rent-full" value="1" checked>
+                                <label for="rent-full" class="btn">100%</label>
+                                <input type="radio" name="rent" id="rent-discount" value="0.5">
+                                <label for="rent-discount" class="btn">50%</label>
+                                <input type="radio" name="rent" id="rent-zero" value="0">
+                                <label for="rent-zero" class="btn">0%</label>
+                            </div>
+                        </td>
+                        <td><div class="inline" id="rent-price">200</div>$</td>
+                        <td><input type="number" id="rent" name="rent-total" readonly disabled></td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Еда</td>
+                        <td>
+                            <div class="inline-box">
+                                <input type="radio" name="food" id="food-extra" value="2">
+                                <label for="food-extra" class="btn">200%</label>
+                                <input type="radio" name="food" id="food-full" value="1" checked>
+                                <label for="food-full" class="btn">100%</label>
+                                <input type="radio" name="food" id="food-discount" value="0.5">
+                                <label for="food-discount" class="btn">50%</label>
+                                <input type="radio" name="food" id="food-zero" value="0">
+                                <label for="food-zero" class="btn">0%</label>
+                            </div>
+                        </td>
+                        <td><div class="inline" id="food-price">120</div>$</td>
+                        <td><input type="number" id="food" name="food-total" readonly disabled></td>
+                    </tr>
+                    <tr>
+                        <td>Связь</td>
+                        <td>
+                            <div class="inline-box">
+                                <input type="radio" name="internet" id="internet-extra" value="2">
+                                <label for="internet-extra" class="btn">200%</label>
+                                <input type="radio" name="internet" id="internet-full" value="1" checked>
+                                <label for="internet-full" class="btn">100%</label>
+                                <input type="radio" name="internet" id="internet-discount" value="0.5">
+                                <label for="internet-discount" class="btn">50%</label>
+                                <input type="radio" name="internet" id="internet-zero" value="0">
+                                <label for="internet-zero" class="btn">0%</label>
+                            </div>
+                        </td>
+                        <td><div class="inline" id="internet-price">10</div>$</td>
+                        <td><input type="number" id="internet" name="internet" readonly disabled></td>
+                    </tr>
+                    <tr>
+                        <td>Проезд</td>
+                        <td>
+                            <div class="inline-box">
+                                <input type="radio" name="transport" id="transport-extra" value="2">
+                                <label for="transport-extra" class="btn">200%</label>
+                                <input type="radio" name="transport" id="transport-full" value="1" checked>
+                                <label for="transport-full" class="btn">100%</label>
+                                <input type="radio" name="transport" id="transport-discount" value="0.5">
+                                <label for="transport-discount" class="btn">50%</label>
+                                <input type="radio" name="transport" id="transport-zero" value="0">
+                                <label for="transport-zero" class="btn">0%</label>
+                            </div>
+                        </td>
+                        <td><div class="inline" id="transport-price">30</div>$</td>
+                        <td><input type="number" id="transport" name="transport" readonly disabled></td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Дети</td>
+                        <td>
+                            <div class="inline-box">
+                                <input type="radio" name="children" id="children-extra" value="2">
+                                <label for="children-extra" class="btn">200%</label>
+                                <input type="radio" name="children" id="children-full" value="1" checked>
+                                <label for="children-full" class="btn">100%</label>
+                                <input type="radio" name="children" id="children-discount" value="0.5">
+                                <label for="children-discount" class="btn">50%</label>
+                                <input type="radio" name="children" id="children-zero" value="0">
+                                <label for="children-zero" class="btn">0%</label>
+                            </div>
+                        </td>
+                        <td rowspan="2"><div class="inline" id="children-price">100</div>$</td>
+                        <td rowspan="2"><input type="number" id="children" name="children" readonly disabled></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="inline-box">
+                                <input type="radio" name="children-count" id="children-count-extra" value="3">
+                                <label for="children-count-extra" class="btn"> 3 </label>
+                                <input type="radio" name="children-count" id="children-count-full" value="2">
+                                <label for="children-count-full" class="btn"> 2 </label>
+                                <input type="radio" name="children-count" id="children-count-discount" value="1">
+                                <label for="children-count-discount" class="btn"> 1 </label>
+                                <input type="radio" name="children-count" id="children-count-zero" value="0" checked>
+                                <label for="children-count-zero" class="btn"> 0 </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><label for="total-expenses">Итого расходов на жизнь:</label></td>
+                        <td><input type="number" id="total-expenses" name="total-expenses" readonly disabled></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><label for="total-monthly-expenses">Итого с учетом платежей по кредитам:</label></td>
+                        <td><input type="number" id="total-monthly-expenses" name="total-monthly-expenses" readonly disabled></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><label for="balance">Сальдо на конец месяца:</label></td>
+                        <td id="balance"></td>
+                    </tr>
                 </table>
             </div>
             <p> </p>
@@ -378,9 +373,10 @@
         finalCell.appendChild(inputFinal)
         newRow.appendChild(finalCell)
         //
-        incomeTableBody.appendChild(newRow);
-        const addButton = document.getElementById("addIncome")
-        incomeTableBody.appendChild(addButton);
+        incomeTableBody.appendChild(newRow)
+        incomeTableBody.appendChild(document.getElementById("add-income"))
+        incomeTableBody.appendChild(document.getElementById("total-income-row"))
+        incomeTableBody.appendChild(document.getElementById("total-passive-income-row"))
     }
 
     function createNewIncomeRows(maximum) {
@@ -456,8 +452,8 @@
         newRow.appendChild(outputCell)
         loanTableBody.appendChild(newRow)
         //
-        const addButton = document.getElementById("addLoan")
-        loanTableBody.appendChild(addButton)
+        loanTableBody.appendChild(document.getElementById("add-loan"))
+        loanTableBody.appendChild(document.getElementById("total-loan-row"))
     }
 
     function createNewLoanRows(maximum) {
@@ -624,7 +620,7 @@
 
     function calculateBalance(totalIncome, totalExpenses) {
         const element = document.getElementById("balance")
-        element.value = (totalIncome - totalExpenses).toFixed(2)
+        element.innerHTML = (totalIncome - totalExpenses).toFixed(2)
         if (totalIncome < totalExpenses) {
             element.classList.add('negative')
         } else {
@@ -635,9 +631,11 @@
         const passiveTotalIncome = parseFloat(document.getElementById("total-passive-income").value) || 0
         const totalExpense = parseFloat(document.getElementById("total-monthly-expenses").value) || 0
         if (passiveTotalIncome > totalExpense) {
-            document.getElementById('goal_ok').style.display = "block"; 
+            document.getElementById('goal_ok').style.display = "block";
+            document.getElementById('main-container').style.background = "#c1e0c1";
         } else {
             document.getElementById('goal_ok').style.display = "none"; 
+            document.getElementById('main-container').style.background = "#fff";
         }
     }
 
@@ -670,14 +668,27 @@
         padding: 0;
         background-color: #f4f4f4;
     }
-    
+    div {
+        display: inline-table;
+    }
+
     .container {
-        min-width: 510px;
-        margin: 20px auto;
+        margin: 10px;
+        padding: 10px;
         background: #fff;
-        padding: 20px;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #goal_ok {
+        color: #700070;
+        background-color: #c1e0c1;
+        font-size: x-large;
+        display: none;
+    }
+
+    #main-container {
+        display: flex;
     }
     
     h1 {
@@ -685,6 +696,7 @@
     }
     
     .section {
+        width: 520px;
         margin-bottom: 20px;
     }
     
@@ -702,7 +714,7 @@
     }
 
     input[type="text"] {
-        width: 90%;
+        width: 80%;
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 4px;        
@@ -805,11 +817,8 @@
     .negative {
         color:red;
     }
-    #goal_ok {
-        color: #700070;
-        background-color: #028202;
-        font-size: x-large;
-        display: none;
+    .inline-box {
+        display: inline-flex;
     }
 </style>
 </html>
