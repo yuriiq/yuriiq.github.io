@@ -136,7 +136,7 @@
                     <thead>
                         <tr>
                             <th>Название</th>
-                            <th>Количество</th>
+                            <th>Кол-во</th>
                             <th>Цена</th>
                             <th>Доход</th>
                             <th>Всего</th>
@@ -148,8 +148,8 @@
                             <td><input type="hidden" id="total-fond-counter" name="total-fond-counter" readonly></td>
                         </tr>
                         <tr id="total-fond-row">
-                            <td colspan="4"><label for="total-fond">Итого доходов по всем активам:</label></td>
-                            <td><input type="number" id="total-fond" name="total-fond" readonly disabled></td>
+                            <td colspan="4">Итого доходов по всем активам:</td>
+                            <td id="total-fond"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -172,8 +172,8 @@
                             <td><input type="hidden" id="total-business-counter" name="total-business-counter" readonly></td>
                         </tr>
                         <tr id="total-business-row">
-                            <td colspan="4"><label for="total-business">Итого доходов по всем активам:</label></td>
-                            <td><input type="number" id="total-business" name="total-business" readonly disabled></td>
+                            <td colspan="4">Итого доходов по всем активам:</td>
+                            <td id="total-business"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -251,13 +251,7 @@
         newRow.appendChild(annualCell)
         //
         const outputCell = document.createElement('td')
-        const inputPayment = document.createElement('input')
-        inputPayment.type = 'number'
-        inputPayment.disabled = true
-        inputPayment.readOnly = true
-        inputPayment.className = 'lender-payment'
-        inputPayment.name = 'lender-payment' + loanTableBody.rows.length
-        outputCell.appendChild(inputPayment)
+        outputCell.className = 'lender-payment'
         newRow.appendChild(outputCell)
         loanTableBody.appendChild(newRow)
         //
@@ -300,13 +294,7 @@
         newRow.appendChild(incomeCell)
         //
         const totalCell = document.createElement('td')
-        const inputTotal = document.createElement('input')
-        inputTotal.type = 'number'
-        inputTotal.className = 'fond-total'
-        inputTotal.disabled = true
-        inputTotal.readOnly = true 
-        inputTotal.name = 'fond-total' + fondTableBody.rows.length
-        totalCell.appendChild(inputTotal)
+        totalCell.className = 'fond-total'
         newRow.appendChild(totalCell)
         //
         fondTableBody.appendChild(newRow)
@@ -407,7 +395,7 @@
                 } else {
                     const loanRate = parseFloat(loanRates[i].innerHTML) || 0
                     const final = lenderLoan * loanRate * 0.01
-                    lenderPayments[i].value = final.toFixed(2)
+                    lenderPayments[i].innerHTML = final.toFixed(2)
                     totalLoan += final
                 }
             }
@@ -433,12 +421,12 @@
                 const fondIncome = parseFloat(fondIncomes[i].value) || 0
                 const fondTotal = fondCount * fondIncome
                 totalFonds += fondTotal
-                fondTotals[i].value = fondTotal.toFixed(2)
+                fondTotals[i].innerHTML = fondTotal.toFixed(2)
             }
         } else {
             throw new Error("Wrong table scruct")
         }
-        document.getElementById("total-fond").value = totalFonds.toFixed(2)
+        document.getElementById("total-fond").innerHTML = totalFonds.toFixed(2)
         document.getElementById("total-fond-income").innerHTML = totalFonds.toFixed(2)
         document.getElementById("total-fond-counter").value = fondTableBody.rows.length - 1
         return totalFonds
@@ -451,7 +439,7 @@
             totalFonds += parseFloat(businessIncome[i].value) || 0
         }
 
-        document.getElementById("total-business").value = totalFonds.toFixed(2)
+        document.getElementById("total-business").innerHTML = totalFonds.toFixed(2)
         document.getElementById("total-business-income").innerHTML = totalFonds.toFixed(2)
         document.getElementById("total-business-counter").value = businessTableBody.rows.length - 1
         return totalFonds
@@ -522,7 +510,7 @@
         background-color: #f4f4f4;
     }
     .container {
-        min-width: 535px;
+        min-width: 520px;
         margin: 10px;
         padding: 10px;
         background: #fff;
@@ -543,7 +531,7 @@
         text-align: center;
     }
     .section {
-        width: 535px;
+        width: 520px;
         margin-bottom: 20px;
         padding: 2px;
     }
