@@ -9,31 +9,51 @@
     <h1>Калькулятор 101</h1>
     <form id="game-form">
         <div class="container p-name">
-            <label for="p-name">Имя игрока:</label>
+            <label for="p-name">Игрок:</label>
             <input type="text" id="p-name" name="p-name">
         </div>
         <div class="container" id="main-container">    
             <div class="section">
-                <h2>Основные доходы и расходы</h2>
+                <h2>Доходы и расходы</h2>
                 <table>
                     <tr>
                         <td>Зарплата</td>
                         <td><input type="number" id="salary" name="salary"></td>
                     </tr>
                     <tr>
+                        <td>Проценты/Дивиденды</td>
+                        <td id="total-fond-income"></td>
+                    </tr>
+                    <tr>
+                        <td>Недвижимость и бизнес</td>
+                        <td id="total-business-income"></td>
+                    </tr>
+                    <tr>
+                        <td>Пассивный доход</td>
+                        <td id="passive-income"></td>
+                    </tr>
+                    <tr>
+                        <td>Общий доход</td>
+                        <td id="total-income"></td>
+                    </tr>
+                    <tr>
                         <td>Налоги</td>
                         <td><input type="number" id="taxes" name="taxes"></td>
+                    </tr>
+                    <tr>
+                        <td>Выплаты по кредитам</td>
+                        <td id="total-loan-expenses"></td>
                     </tr>
                     <tr>
                         <td>Прочие расходы</td>
                         <td><input type="number" id="other-expenses" name="other-expenses"></td>
                     </tr>
                     <tr>
-                        <td>Ребёнок</td>
+                        <td>Расходы на ребёнка</td>
                         <td><input type="number" id="children" name="children"></td>
                     </tr>
                     <tr>
-                        <td>Х
+                        <td>
                             <div class="inline-box">
                                 <input type="radio" name="children-count" id="children-count-extra" value="3">
                                 <label for="children-count-extra" class="btn"> 3 </label>
@@ -45,22 +65,14 @@
                                 <label for="children-count-zero" class="btn"> 0 </label>
                             </div>
                         </td>
-                        <td><input type="number" id="children-total" name="children-total" readonly disabled></td>
-                    </tr>
-                    <tr>
-                        <td>Пассивный доход</td>
-                        <td id="passive-income"></td>
-                    </tr>
-                    <tr>
-                        <td>Общий доход</td>
-                        <td id="total-income"></td>
+                        <td id="children-total"></td>
                     </tr>
                     <tr>
                         <td>Общий расход</td>
                         <td id="total-expenses"></td>
                     </tr>
                     <tr>
-                        <td>Сальдо на конец месяца:</td>
+                        <td>Месячный денежный поток</td>
                         <td id="balance"></td>
                     </tr>
                 </table>
@@ -112,8 +124,8 @@
                             <td><input type="hidden" id="total-loan-counter" name="total-loan-counter" readonly></td>
                         </tr>
                         <tr id="total-loan-row">
-                            <td colspan="3"><label for="total-loan-expenses">Итого расходов по кредитам:</label></td>
-                            <td><input type="number" id="total-loan-expenses" name="total-loan-expenses" readonly disabled></td>
+                            <td colspan="3">Итого расходов по кредитам:</td>
+                            <td id="loan-expenses"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -150,7 +162,7 @@
                             <th>Название</th>
                             <th>Взнос</th>
                             <th>Цена</th>
-                            <th>Кредит</th>
+                            <th>Пассив</th>
                             <th>Доход</th>
                         </tr>
                     </thead>
@@ -402,7 +414,8 @@
         } else {
             throw new Error("Wrong table scruct")
         }
-        document.getElementById("total-loan-expenses").value = totalLoan.toFixed(2)
+        document.getElementById("loan-expenses").innerHTML = totalLoan.toFixed(2)
+        document.getElementById("total-loan-expenses").innerHTML = totalLoan.toFixed(2)
         document.getElementById("total-loan-counter").value = loanTableBody.rows.length - 1
         return totalLoan
     }
@@ -426,6 +439,7 @@
             throw new Error("Wrong table scruct")
         }
         document.getElementById("total-fond").value = totalFonds.toFixed(2)
+        document.getElementById("total-fond-income").innerHTML = totalFonds.toFixed(2)
         document.getElementById("total-fond-counter").value = fondTableBody.rows.length - 1
         return totalFonds
     }
@@ -438,6 +452,7 @@
         }
 
         document.getElementById("total-business").value = totalFonds.toFixed(2)
+        document.getElementById("total-business-income").innerHTML = totalFonds.toFixed(2)
         document.getElementById("total-business-counter").value = businessTableBody.rows.length - 1
         return totalFonds
     }
@@ -454,7 +469,7 @@
         const totalIncome = passiveIncome + salary
         const balance = totalIncome - totalExpenses
         //
-        document.getElementById("children-total").value = children.toFixed(2)
+        document.getElementById("children-total").innerHTML = children.toFixed(2)
         document.getElementById("passive-income").innerHTML = passiveIncome.toFixed(2)
         document.getElementById("total-income").innerHTML = totalIncome.toFixed(2)
         document.getElementById("total-expenses").innerHTML = totalExpenses.toFixed(2)
